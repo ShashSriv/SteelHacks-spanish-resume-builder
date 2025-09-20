@@ -19,19 +19,6 @@ const VAPI_CONFIG = {
  */
 export const processVoiceWithVAPI = async (audioBlob, currentStep, currentData) => {
   try {
-    // TODO: Integrate with VAPI for real-time voice processing
-    // This function will be enhanced to use VAPI for:
-    // - Real-time speech-to-text conversion with high accuracy
-    // - Natural language understanding for resume content extraction
-    // - Context-aware translation and content processing
-    // - Real-time feedback and guidance during voice input
-    // - Spanish language detection and processing
-    // - ATS-optimized content suggestions
-    
-    console.log('VAPI Integration Point: Processing voice input...');
-    console.log('Audio Blob Size:', audioBlob.size, 'bytes');
-    console.log('Current Step:', currentStep);
-    
     // Step 1: Convert audio to text using VAPI speech-to-text
     const transcript = await speechToText(audioBlob);
     
@@ -63,13 +50,6 @@ export const processVoiceWithVAPI = async (audioBlob, currentStep, currentData) 
  */
 export const processTextWithVAPI = async (text, currentStep, currentData) => {
   try {
-    // TODO: Integrate with VAPI for enhanced text processing
-    // This function will be enhanced to use VAPI for:
-    // - Advanced natural language processing for content extraction
-    // - Context-aware translation with industry-specific terminology
-    // - Smart content suggestions and improvements
-    // - ATS optimization recommendations
-    
     // Step 1: Translate Spanish to English
     const translation = await translateText(text, 'es', 'en');
     
@@ -254,266 +234,88 @@ const processResumeContent = async (originalText, translatedText, currentStep, c
 };
 
 /**
- * Generate HTML resume from structured data
+ * Generate LaTeX resume from structured data
  * @param {Object} resumeData - Structured resume data
- * @returns {Promise<string>} - HTML formatted resume
+ * @returns {Promise<string>} - LaTeX formatted resume
  */
-export const generateHTMLResume = async (resumeData) => {
-  // TODO: Integrate with VAPI for enhanced content processing and formatting
-  // This function will be enhanced to use VAPI for:
-  // - Content optimization and professional language enhancement
-  // - ATS-friendly formatting suggestions
-  // - Industry-specific template selection
-  
-  const htmlTemplate = `
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV - ${resumeData.contact.name || 'Curriculum Vitae'}</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .resume-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-        .header {
-            text-align: center;
-            border-bottom: 3px solid #2c3e50;
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-        }
-        .name {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        .contact-info {
-            font-size: 1.1em;
-            color: #7f8c8d;
-        }
-        .section {
-            margin-bottom: 30px;
-        }
-        .section-title {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-        }
-        .item {
-            margin-bottom: 20px;
-        }
-        .item-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #34495e;
-        }
-        .item-company {
-            font-size: 1.1em;
-            color: #7f8c8d;
-            font-style: italic;
-        }
-        .item-dates {
-            color: #95a5a6;
-            font-size: 0.9em;
-        }
-        .item-description {
-            margin-top: 8px;
-            text-align: justify;
-        }
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .skill-tag {
-            background-color: #3498db;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.9em;
-        }
-        .summary {
-            font-style: italic;
-            text-align: justify;
-            background-color: #ecf0f1;
-            padding: 15px;
-            border-left: 4px solid #3498db;
-        }
-        @media print {
-            body { background: white; }
-            .resume-container { box-shadow: none; }
-        }
-    </style>
-</head>
-<body>
-    <div class="resume-container">
-        <div class="header">
-            <div class="name">${resumeData.contact.name || 'Nombre'}</div>
-            <div class="contact-info">
-                ${resumeData.contact.email || ''} 
-                ${resumeData.contact.phone ? ' • ' + resumeData.contact.phone : ''}
-                ${resumeData.contact.address ? ' • ' + resumeData.contact.address : ''}
-                ${resumeData.contact.linkedin ? ' • ' + resumeData.contact.linkedin : ''}
-            </div>
-        </div>
+export const generateLaTeXResume = async (resumeData) => {
+  // Mock LaTeX generation - replace with actual LaTeX generation
+  const latexTemplate = `
+\\documentclass[11pt,a4paper]{article}
+\\usepackage[utf8]{inputenc}
+\\usepackage[spanish]{babel}
+\\usepackage{geometry}
+\\usepackage{enumitem}
+\\usepackage{titlesec}
+\\usepackage{xcolor}
 
-        ${resumeData.summary ? `
-        <div class="section">
-            <div class="section-title">Resumen Profesional</div>
-            <div class="summary">${resumeData.summary}</div>
-        </div>
-        ` : ''}
+\\geometry{margin=0.75in}
+\\setlength{\\parindent}{0pt}
+\\setlength{\\parskip}{6pt}
 
-        ${resumeData.experience.length > 0 ? `
-        <div class="section">
-            <div class="section-title">Experiencia Laboral</div>
-            ${resumeData.experience.map(exp => `
-            <div class="item">
-                <div class="item-title">${exp.title || 'Puesto'}</div>
-                <div class="item-company">${exp.company || 'Empresa'}</div>
-                <div class="item-dates">${exp.dates || 'Fechas'}</div>
-                <div class="item-description">${exp.description || ''}</div>
-            </div>
-            `).join('')}
-        </div>
-        ` : ''}
+\\titleformat{\\section}{\\large\\bfseries\\color{blue!70!black}}{}{0em}{}[\\titlerule]
+\\titleformat{\\subsection}{\\normalsize\\bfseries}{}{0em}{}
 
-        ${resumeData.education.length > 0 ? `
-        <div class="section">
-            <div class="section-title">Educación</div>
-            ${resumeData.education.map(edu => `
-            <div class="item">
-                <div class="item-title">${edu.degree || 'Título'}</div>
-                <div class="item-company">${edu.institution || 'Institución'}</div>
-                <div class="item-dates">${edu.dates || 'Fechas'}</div>
-            </div>
-            `).join('')}
-        </div>
-        ` : ''}
+\\begin{document}
 
-        ${resumeData.skills.length > 0 ? `
-        <div class="section">
-            <div class="section-title">Habilidades</div>
-            <div class="skills-container">
-                ${resumeData.skills.map(skill => `
-                <span class="skill-tag">${skill}</span>
-                `).join('')}
-            </div>
-        </div>
-        ` : ''}
+\\begin{center}
+{\\Huge\\bfseries ${resumeData.contact.name || 'Nombre'}}\\\\
+${resumeData.contact.email || ''} ${resumeData.contact.phone ? '\\hspace{1em}•\\hspace{1em}' + resumeData.contact.phone : ''}${resumeData.contact.address ? '\\hspace{1em}•\\hspace{1em}' + resumeData.contact.address : ''}
+\\end{center}
 
-        ${resumeData.languages.length > 0 ? `
-        <div class="section">
-            <div class="section-title">Idiomas</div>
-            <div class="skills-container">
-                ${resumeData.languages.map(lang => `
-                <span class="skill-tag">${lang}</span>
-                `).join('')}
-            </div>
-        </div>
-        ` : ''}
-    </div>
-</body>
-</html>`;
+\\vspace{0.5em}
 
-  return htmlTemplate;
+${resumeData.summary ? `\\section{Resumen Profesional}
+${resumeData.summary}
+
+` : ''}${resumeData.experience.length > 0 ? `\\section{Experiencia Laboral}
+${resumeData.experience.map(exp => `
+\\subsection{${exp.title || 'Puesto'}}
+\\textbf{${exp.company || 'Empresa'}} \\hfill ${exp.dates || 'Fechas'}\\\\
+${exp.description || ''}
+`).join('')}
+
+` : ''}${resumeData.education.length > 0 ? `\\section{Educación}
+${resumeData.education.map(edu => `
+\\subsection{${edu.degree || 'Título'}}
+\\textbf{${edu.institution || 'Institución'}} \\hfill ${edu.dates || 'Fechas'}
+`).join('')}
+
+` : ''}${resumeData.skills.length > 0 ? `\\section{Habilidades}
+${resumeData.skills.join(' • ')}
+
+` : ''}${resumeData.languages.length > 0 ? `\\section{Idiomas}
+${resumeData.languages.join(' • ')}
+
+` : ''}\\end{document}`;
+
+  return latexTemplate;
 };
 
 /**
- * Convert HTML to PDF using jsPDF
- * @param {string} htmlContent - HTML content
+ * Convert LaTeX to PDF (mock implementation)
+ * @param {string} latexContent - LaTeX content
  * @returns {Promise<Blob>} - PDF blob
  */
-export const htmlToPDF = async (htmlContent) => {
-  // TODO: Integrate with VAPI for enhanced PDF generation
-  // This function will be enhanced to use VAPI for:
-  // - Professional PDF styling and formatting
-  // - ATS-optimized PDF generation
-  // - Multiple template options based on industry
+export const latexToPDF = async (latexContent) => {
+  // Mock PDF generation - in production, this would:
+  // 1. Send LaTeX to a LaTeX compilation service
+  // 2. Return the compiled PDF as a blob
   
-  try {
-    // Import jsPDF dynamically to avoid SSR issues
-    const { default: jsPDF } = await import('jspdf');
-    const { default: html2canvas } = await import('html2canvas');
-    
-    // Create a temporary container for the HTML content
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = htmlContent;
-    tempDiv.style.position = 'absolute';
-    tempDiv.style.left = '-9999px';
-    tempDiv.style.top = '0';
-    tempDiv.style.width = '800px';
-    tempDiv.style.backgroundColor = 'white';
-    tempDiv.style.padding = '20px';
-    document.body.appendChild(tempDiv);
-    
-    // Convert HTML to canvas
-    const canvas = await html2canvas(tempDiv, {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      backgroundColor: '#ffffff'
-    });
-    
-    // Remove temporary element
-    document.body.removeChild(tempDiv);
-    
-    // Create PDF
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    
-    const imgWidth = 210; // A4 width in mm
-    const pageHeight = 295; // A4 height in mm
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    let heightLeft = imgHeight;
-    
-    let position = 0;
-    
-    // Add first page
-    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
-    
-    // Add additional pages if needed
-    while (heightLeft >= 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-    }
-    
-    // Convert to blob
-    const pdfBlob = pdf.output('blob');
-    return pdfBlob;
-    
-  } catch (error) {
-    console.error('Error generating PDF:', error);
-    // Fallback to mock PDF for testing
-    return new Promise((resolve) => {
+  console.log('Generating PDF from LaTeX:', latexContent);
+  
+  // For now, return a mock PDF blob
+  return new Promise((resolve) => {
+    setTimeout(() => {
       const mockPDF = new Blob(['Mock PDF content'], { type: 'application/pdf' });
       resolve(mockPDF);
-    });
-  }
+    }, 2000);
+  });
 };
 
 export default {
   processVoiceWithVAPI,
   processTextWithVAPI,
-  generateHTMLResume,
-  htmlToPDF
+  generateLaTeXResume,
+  latexToPDF
 };

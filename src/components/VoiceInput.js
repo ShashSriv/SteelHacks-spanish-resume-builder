@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Mic, MicOff, Square } from 'lucide-react';
 
-const VoiceInput = ({ onVoiceInput, isProcessing, currentStep, onRecordingChange, isRecording: parentIsRecording }) => {
+const VoiceInput = ({ onVoiceInput, isProcessing, currentStep }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
-
-  // Sync with parent recording state
-  useEffect(() => {
-    if (parentIsRecording && !isRecording) {
-      startRecording();
-    } else if (!parentIsRecording && isRecording) {
-      stopRecording();
-    }
-  }, [parentIsRecording]);
 
   const getStepPrompt = (step) => {
     const prompts = {
@@ -46,12 +37,12 @@ const VoiceInput = ({ onVoiceInput, isProcessing, currentStep, onRecordingChange
 
       setMediaRecorder(recorder);
       recorder.start();
+      setIsRecording(true);
       setRecordingTime(0);
       setAudioChunks([]);
-      if (onRecordingChange) onRecordingChange(true);
     } catch (error) {
       console.error('Error accessing microphone:', error);
-      alert('No se pudo acceder al micrófono. Por favor, verifica los permisos.');
+      alert('Could not access microphone. Please check permissions.');
     }
   };
 
@@ -59,35 +50,14 @@ const VoiceInput = ({ onVoiceInput, isProcessing, currentStep, onRecordingChange
     if (mediaRecorder && isRecording) {
       mediaRecorder.stop();
       setIsRecording(false);
-      if (onRecordingChange) onRecordingChange(false);
     }
   };
 
   const processAudio = async (audioBlob) => {
-    // TODO: Integrate with VAPI for real speech-to-text processing
-    // This function will send the audioBlob to VAPI for:
-    // - Speech-to-text conversion
-    // - Spanish language detection and processing
-    // - Content extraction and structuring
-    // - Translation to English if needed
-    
-    try {
-      // Mock implementation - replace with actual VAPI call
-      console.log('Processing audio with VAPI...', audioBlob);
-      
-      // Simulate VAPI processing delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Mock transcript for testing
-      const mockTranscript = getMockTranscript(currentStep);
-      onVoiceInput(mockTranscript);
-      
-    } catch (error) {
-      console.error('VAPI processing error:', error);
-      // Fallback to mock data for testing
-      const mockTranscript = getMockTranscript(currentStep);
-      onVoiceInput(mockTranscript);
-    }
+    // This would integrate with VAPI for speech-to-text and translation
+    // For now, we'll simulate the process
+    const mockTranscript = getMockTranscript(currentStep);
+    onVoiceInput(mockTranscript);
   };
 
   const getMockTranscript = (step) => {
