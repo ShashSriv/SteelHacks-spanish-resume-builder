@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import VoiceInput from './components/VoiceInput';
-import TextInput from './components/TextInput';
-import TranscriptPreview from './components/TranscriptPreview';
 import ResumePreview from './components/ResumePreview';
 import ResumeForm from './components/ResumeForm';
-import { processVoiceWithVAPI, processTextWithVAPI, generateLaTeXResume, latexToPDF } from './utils/vapiIntegration';
+import { processVoiceWithVAPI, processTextWithVAPI, generateHTMLResume, htmlToPDF } from './utils/vapiIntegration';
+import { Mic } from 'lucide-react';
 import './App.css';
 
 function App() {
@@ -29,6 +28,8 @@ function App() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState('contact'); // contact, experience, education, skills, summary
   const [sessionActive, setSessionActive] = useState(false);
+  const [showTemplate, setShowTemplate] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
 
   // Handle voice input processing
   const handleVoiceInput = async (transcriptText) => {
@@ -88,8 +89,8 @@ function App() {
   const handleDownloadPDF = async () => {
     try {
       setIsProcessing(true);
-      const latexContent = await generateLaTeXResume(resumeData);
-      const pdfBlob = await latexToPDF(latexContent);
+      const htmlContent = await generateHTMLResume(resumeData);
+      const pdfBlob = await htmlToPDF(htmlContent);
       
       // Create download link
       const url = URL.createObjectURL(pdfBlob);
@@ -110,20 +111,29 @@ function App() {
     }
   };
 
-  const startSession = () => {
-    setSessionActive(true);
-    setCurrentStep('contact');
-    setTranscript('');
-    setTranslation('');
+  const toggleRecording = () => {
+    if (!sessionActive) {
+      // Start session and begin recording
+      setSessionActive(true);
+      setCurrentStep('contact');
+      setTranscript('');
+      setTranslation('');
+      setShowTemplate(false);
+      setIsRecording(true);
+    } else {
+      // Toggle recording state
+      setIsRecording(!isRecording);
+    }
   };
 
   const endSession = () => {
     setSessionActive(false);
+    setIsRecording(false);
   };
 
   return (
     <div className="App">
-      <Header onDownloadPDF={handleDownloadPDF} />
+      <Header />
       
       <main className="container">
         <div className="hero-section">
@@ -145,49 +155,44 @@ function App() {
                 </p>
               </div>
 
-              {!sessionActive ? (
-                <div className="session-controls">
+              <div className="session-controls">
+                <div className="mic-button-container">
                   <button 
-                    className="btn btn-primary"
-                    onClick={startSession}
+                    className={`mic-button ${isRecording ? 'recording' : ''}`}
+                    onClick={toggleRecording}
                   >
-                    Start Session
+                    <Mic className="mic-icon" />
                   </button>
-                </div>
-              ) : (
-                <>
-                  <VoiceInput 
-                    onVoiceInput={handleVoiceInput}
-                    isProcessing={isProcessing}
-                    currentStep={currentStep}
-                  />
-                  
-                  <div className="divider">
-                    <span>o</span>
+                  <div className="mic-labels">
+                    <p className="mic-label-en">
+                      {!sessionActive ? 'Press to Start' : (isRecording ? 'Recording...' : 'Press to Record')}
+                    </p>
+                    <p className="mic-label-es">
+                      {!sessionActive ? 'Presiona para Empezar' : (isRecording ? 'Grabando...' : 'Presiona para Grabar')}
+                    </p>
                   </div>
                   
-                  <TextInput 
-                    onTextInput={handleTextInput}
-                    isProcessing={isProcessing}
-                    currentStep={currentStep}
-                  />
-                  
-                  <button 
-                    className="btn btn-secondary"
-                    onClick={endSession}
-                    style={{ marginTop: '16px' }}
-                  >
-                    End Session
-                  </button>
-                </>
+                  {sessionActive && (
+                    <div className="recording-instructions">
+                      <p className="instruction-text">
+                        {getStepInstruction(currentStep)}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {sessionActive && (
+                <VoiceInput 
+                  onVoiceInput={handleVoiceInput}
+                  isProcessing={isProcessing}
+                  currentStep={currentStep}
+                  onRecordingChange={setIsRecording}
+                  isRecording={isRecording}
+                />
               )}
             </div>
 
-            <TranscriptPreview 
-              transcript={transcript}
-              translation={translation}
-              isProcessing={isProcessing}
-            />
           </div>
 
           {/* Preview Section */}
@@ -196,6 +201,8 @@ function App() {
               resumeData={resumeData}
               currentStep={currentStep}
               onDownloadPDF={handleDownloadPDF}
+              showTemplate={showTemplate}
+              onHideTemplate={() => setShowTemplate(false)}
             />
           </div>
         </div>
@@ -220,6 +227,18 @@ const getStepTitle = (step) => {
     summary: 'Professional Summary'
   };
   return titles[step] || step;
+};
+
+// Helper function to get Spanish instructions for each step
+const getStepInstruction = (step) => {
+  const instructions = {
+    contact: 'Di tu nombre completo, correo electrónico, teléfono y dirección. Ejemplo: "Mi nombre es María González, mi correo es maria@email.com, mi teléfono es 555-1234 y vivo en Madrid, España."',
+    experience: 'Describe tu experiencia laboral más reciente. Incluye el puesto, empresa, fechas y responsabilidades. Ejemplo: "Trabajé como desarrolladora de software en TechCorp desde 2020 hasta 2023, desarrollando aplicaciones web con React y Node.js."',
+    education: 'Menciona tu educación y formación. Incluye títulos, instituciones y fechas. Ejemplo: "Soy licenciada en Ciencias de la Computación de la Universidad Politécnica de Madrid, graduada en 2020."',
+    skills: 'Lista tus habilidades principales. Ejemplo: "Tengo experiencia en JavaScript, React, Node.js, Python, bases de datos SQL, Git y metodologías ágiles."',
+    summary: 'Proporciona un resumen profesional de 2-3 oraciones sobre tu perfil. Ejemplo: "Soy una desarrolladora de software apasionada con 5 años de experiencia en desarrollo web full-stack, especializada en tecnologías modernas y metodologías ágiles."'
+  };
+  return instructions[step] || 'Habla sobre tu información profesional';
 };
 
 export default App;

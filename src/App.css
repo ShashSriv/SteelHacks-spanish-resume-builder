@@ -43,6 +43,140 @@
   padding: 32px 0;
 }
 
+.mic-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.mic-button {
+  width: 100px;
+  height: 100px;
+  min-width: 100px;
+  min-height: 100px;
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  user-select: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.mic-button:hover:not(.recording) {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+}
+
+.mic-button:active:not(.recording) {
+  transform: scale(0.95);
+}
+
+.mic-button.recording {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+  animation: recordingPulse 1.5s infinite;
+  transform: none;
+}
+
+.mic-button.recording:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  transform: none;
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+}
+
+.mic-icon {
+  width: 48px;
+  height: 48px;
+  transition: all 0.3s ease-in-out;
+}
+
+.mic-button.recording .mic-icon {
+  animation: micBounce 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes recordingPulse {
+  0% {
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+  }
+  50% {
+    box-shadow: 0 12px 35px rgba(220, 38, 38, 0.6);
+  }
+  100% {
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+  }
+}
+
+@keyframes micBounce {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+.mic-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  text-align: center;
+}
+
+.mic-label-en {
+  font-size: 18px;
+  font-weight: 700;
+  color: #374151;
+  margin: 0;
+}
+
+.mic-label-es {
+  font-size: 16px;
+  font-weight: 500;
+  color: #6b7280;
+  font-style: italic;
+  margin: 0;
+}
+
+.recording-instructions {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  max-width: 500px;
+  text-align: left;
+}
+
+.instruction-text {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.6;
+  margin: 0;
+  font-style: italic;
+}
+
 .divider {
   display: flex;
   align-items: center;
@@ -273,5 +407,27 @@
   
   .step:not(:last-child)::after {
     display: none;
+  }
+  
+  .mic-button {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    min-height: 80px;
+    max-width: 80px;
+    max-height: 80px;
+  }
+  
+  .mic-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .mic-label-en {
+    font-size: 16px;
+  }
+  
+  .mic-label-es {
+    font-size: 14px;
   }
 }
