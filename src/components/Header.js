@@ -1,7 +1,7 @@
 import React from 'react';
-import { FileText, Download } from 'lucide-react';
+import { FileText } from 'lucide-react';
 
-const Header = ({ onDownloadPDF }) => {
+const Header = () => {
   return (
     <header className="header">
       <div className="container">
@@ -10,15 +10,6 @@ const Header = ({ onDownloadPDF }) => {
             <FileText className="logo-icon" />
             <h1>Resume Builder</h1>
           </div>
-          <nav className="nav">
-            <button 
-              className="btn btn-secondary"
-              onClick={onDownloadPDF}
-            >
-              <Download size={20} />
-              Download PDF
-            </button>
-          </nav>
         </div>
       </div>
     </header>

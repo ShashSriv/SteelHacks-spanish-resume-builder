@@ -122,7 +122,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header onDownloadPDF={handleDownloadPDF} />
+      <Header />
       
       <main className="container">
         <div className="hero-section">
