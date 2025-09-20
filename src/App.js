@@ -5,7 +5,7 @@ import TextInput from './components/TextInput';
 import TranscriptPreview from './components/TranscriptPreview';
 import ResumePreview from './components/ResumePreview';
 import ResumeForm from './components/ResumeForm';
-import { processVoiceWithVAPI, processTextWithVAPI, generateLaTeXResume, latexToPDF } from './utils/vapiIntegration';
+import { processVoiceWithVAPI, processTextWithVAPI, generateHTMLResume, htmlToPDF } from './utils/vapiIntegration';
 import './App.css';
 
 function App() {
@@ -88,8 +88,8 @@ function App() {
   const handleDownloadPDF = async () => {
     try {
       setIsProcessing(true);
-      const latexContent = await generateLaTeXResume(resumeData);
-      const pdfBlob = await latexToPDF(latexContent);
+      const htmlContent = await generateHTMLResume(resumeData);
+      const pdfBlob = await htmlToPDF(htmlContent);
       
       // Create download link
       const url = URL.createObjectURL(pdfBlob);
