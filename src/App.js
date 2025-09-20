@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import VoiceInput from './components/VoiceInput';
-import TextInput from './components/TextInput';
 import ResumePreview from './components/ResumePreview';
 import ResumeForm from './components/ResumeForm';
 import { processVoiceWithVAPI, processTextWithVAPI, generateHTMLResume, htmlToPDF } from './utils/vapiIntegration';
@@ -112,8 +111,8 @@ function App() {
                 <h2 className="card-title">Information Input</h2>
                 <p className="card-subtitle">
                   {sessionActive 
-                    ? `Current step: ${getStepTitle(currentStep)} - Speak to add information`
-                    : 'Start a session to begin building your resume with voice'
+                    ? `Current step: ${getStepTitle(currentStep)} - Speak in Spanish to add information`
+                    : 'Start a session to begin building your resume with Spanish voice input'
                   }
                 </p>
               </div>
