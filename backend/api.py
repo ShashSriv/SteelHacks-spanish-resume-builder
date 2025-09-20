@@ -69,9 +69,9 @@ def get_data_from_vapi():
     # Certifications: [name, issuer, year]
     if "Certifications" in data:
         c = data["Certifications"]
-        if len(c) > 0: resume.certification1.name = c[0]
-        if len(c) > 1: resume.certification1.issuer = c[1]
-        if len(c) > 2: resume.certification1.year = c[2]
+        if len(c) > 0: resume.certification.name = c[0]
+        if len(c) > 1: resume.certification.issuer = c[1]
+        if len(c) > 2: resume.certification.year = c[2]
 
     # Skills: [skill1, skill2, ...]
     if "Skills" in data:
@@ -84,4 +84,4 @@ def latest():
     return jsonify(resume.to_dict()), 200
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=True)
