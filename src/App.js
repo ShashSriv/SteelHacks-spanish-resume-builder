@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import VoiceInput from './components/VoiceInput';
-import TranscriptPreview from './components/TranscriptPreview';
+import TextInput from './components/TextInput';
 import ResumePreview from './components/ResumePreview';
 import ResumeForm from './components/ResumeForm';
 import { processVoiceWithVAPI, processTextWithVAPI, generateHTMLResume, htmlToPDF } from './utils/vapiIntegration';
@@ -146,11 +146,6 @@ function App() {
               )}
             </div>
 
-            <TranscriptPreview 
-              transcript={transcript}
-              translation={translation}
-              isProcessing={isProcessing}
-            />
           </div>
 
           {/* Preview Section */}
