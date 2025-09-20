@@ -28,7 +28,7 @@ class Certification:
 
 class Skills:
     def __init__(self, skills=None):
-        self.skills = skills if skills is not None else []
+        self.skills = []
 
 
 class Resume:
@@ -38,9 +38,7 @@ class Resume:
         self.work2 = Work() 
         self.work3 = Work()               
         self.education = Education()        
-        self.certification1 = Certification()    
-        self.certification2 = Certification() 
-        self.certification3 = Certification() 
+        self.certification = Certification()    
         self.skills = Skills()
         self.summary = ''           
 
@@ -51,9 +49,7 @@ class Resume:
             "work": [self.work1.__dict__, self.work2.__dict__, self.work3.__dict__],
             "education": self.education.__dict__,  
             "certifications": [
-                self.certification1.__dict__,
-                self.certification2.__dict__,
-                self.certification3.__dict__,
+                self.certification.__dict__,
             ],
             "skills": self.skills.__dict__,
             "summary": self.summary,
