@@ -12,7 +12,7 @@ function nextDelay(curr) {
 }
 
 
-// Utility: safe join date range
+// Utility:  safe join date range
 function dateRange(start, end) {
   const a = (start || "").trim();
   const b = (end || "").trim();
