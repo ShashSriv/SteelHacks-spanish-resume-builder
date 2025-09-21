@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FileText, Download, Eye } from 'lucide-react';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 /** ===== Config ===== */
 const API_URL = "http://localhost:8000/latest"; // adjust if needed
@@ -41,6 +43,163 @@ export default function LiveResumePreview() {
     } catch (e) {
       setError(e?.message || "Failed to fetch");
       setDelay((d) => nextDelay(d));
+    }
+  };
+
+  // PDF generation function
+  const generatePDF = async () => {
+    try {
+      const resumeElement = document.querySelector('.resume-preview-content');
+      if (!resumeElement) {
+        alert('No resume content to download');
+        return;
+      }
+
+      // Create a temporary container with professional styling for PDF
+      const tempContainer = document.createElement('div');
+      tempContainer.style.cssText = `
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+        width: 8.5in;
+        background: white;
+        font-family: 'Arial', sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #333;
+        padding: 0.75in;
+        box-sizing: border-box;
+      `;
+
+      // Clone the resume content
+      const clonedContent = resumeElement.cloneNode(true);
+      
+      // Apply professional PDF styling
+      const style = document.createElement('style');
+      style.textContent = `
+        .resume-section {
+          margin-bottom: 20px;
+        }
+        .resume-name {
+          font-size: 28px;
+          font-weight: bold;
+          color: #1f2937;
+          margin-bottom: 6px;
+        }
+        .resume-contact {
+          font-size: 13px;
+          color: #6b7280;
+          margin-bottom: 20px;
+        }
+        .resume-section-title {
+          font-size: 16px;
+          font-weight: bold;
+          color: #1f2937;
+          border-bottom: 1px solid #e5e7eb;
+          padding-bottom: 3px;
+          margin-bottom: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+        .resume-item {
+          margin-bottom: 16px;
+        }
+        .resume-item-title {
+          font-weight: bold;
+          font-size: 15px;
+          color: #1f2937;
+        }
+        .resume-item-company {
+          font-style: italic;
+          font-size: 13px;
+          color: #6b7280;
+          margin: 3px 0;
+        }
+        .resume-item-dates {
+          font-size: 12px;
+          color: #6b7280;
+          margin-bottom: 6px;
+        }
+        .resume-item-description {
+          font-size: 13px;
+          line-height: 1.4;
+        }
+        .resume-item-description ul {
+          margin: 6px 0 0 18px;
+          padding: 0;
+        }
+        .resume-item-description li {
+          margin: 3px 0;
+        }
+        .resume-skills {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .resume-skill {
+          background: #f3f4f6;
+          padding: 4px 10px;
+          border-radius: 4px;
+          font-size: 12px;
+          color: #374151;
+        }
+        a {
+          color: #1f2937;
+          text-decoration: none;
+        }
+      `;
+      
+      tempContainer.appendChild(style);
+      tempContainer.appendChild(clonedContent);
+      document.body.appendChild(tempContainer);
+
+      // Generate canvas from the styled content
+      const canvas = await html2canvas(tempContainer, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        width: tempContainer.offsetWidth,
+        height: tempContainer.offsetHeight
+      });
+
+      // Clean up temporary container
+      document.body.removeChild(tempContainer);
+
+      // Create PDF
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'in',
+        format: 'letter'
+      });
+
+      const imgWidth = 8.5;
+      const pageHeight = 11;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+
+      let position = 0;
+
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      // Download the PDF
+      const fileName = personal?.name 
+        ? `${personal.name.replace(/\s+/g, '_')}_Resume.pdf`
+        : 'Resume.pdf';
+      pdf.save(fileName);
+
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Error generating PDF. Please try again.');
     }
   };
 
@@ -105,9 +264,9 @@ export default function LiveResumePreview() {
         <div className="resume-preview-header">
           <h3 className="card-title">Live Resume Preview</h3>
           <div className="preview-actions">
-            <button className="btn" onClick={refresh}>
-              <Eye size={16} />
-              Refresh
+            <button className="btn" onClick={generatePDF} disabled={!hasContent}>
+              <Download size={16} />
+              Download PDF
             </button>
           </div>
         </div>
