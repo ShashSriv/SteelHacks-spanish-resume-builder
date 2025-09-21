@@ -6,6 +6,7 @@ import ResumePreview from './components/ResumePreview';
 import ResumeForm from './components/ResumeForm';
 import { processVoiceWithVAPI, processTextWithVAPI, generateHTMLResume, htmlToPDF } from './utils/vapiIntegration';
 import './App.css';
+import ResPrev from './components/ResPrev'
 
 function App() {
   const [resumeData, setResumeData] = useState({
@@ -94,6 +95,16 @@ function App() {
     setSessionActive(false);
   };
 
+  const resetBackendResume = async () => {
+  try {
+    const res = await fetch('http://localhost:8000/reset', { method: 'POST' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    alert('Backend resume reset.');
+  } catch (e) {
+    alert(e?.message || 'Reset failed');
+  }
+};
+
   return (
     <div className="App">
       <Header />
@@ -163,6 +174,14 @@ function App() {
           resumeData={resumeData}
           setResumeData={setResumeData}
         />
+        {/* Live Preview from Backend */}
+        <div style={{ marginTop: '40px' }}>
+          <h2>Live Backend Resume Preview</h2>
+          <button className="btn btn-secondary" onClick={resetBackendResume} style={{ marginBottom: 12 }}>
+            Reset Backend Resume
+          </button>
+          <ResPrev/>
+          </div>
       </main>
     </div>
   );
