@@ -34,6 +34,14 @@
   margin-top: 0;
 }
 
+.voice-input-section {
+  margin-bottom: 32px;
+}
+
+.live-preview-section {
+  margin-top: 0;
+}
+
 .session-controls {
   text-align: center;
   padding: 32px 0;
