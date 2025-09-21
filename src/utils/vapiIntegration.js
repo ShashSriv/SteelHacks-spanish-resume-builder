@@ -1,86 +1,8 @@
-// Simple VAPI Integration for Spanish Resume Builder
-// This file uses @vapi-ai/web SDK for basic voice recording
-
-import  Vapi  from '@vapi-ai/web';
+// PDF Generation for Spanish Resume Builder
 
 // =============================================================================
-// VAPI CONFIGURATION
+// PDF GENERATION FUNCTIONS
 // =============================================================================
-// Single configuration object - replace with your actual values
-const VAPI_CONFIG = {
-  API_KEY: "4567fa6a-0035-4262-9fd9-81b3afb4bb34",
-  ASSISTANT_ID: "72e746cd-4a01-472e-a086-4cec4bad8f6f",
-};
-
-// Initialize VAPI client
-let vapiClient = null;
-
-// =============================================================================
-// SIMPLE VAPI FUNCTIONS
-// =============================================================================
-
-/**
- * Start VAPI call
- * @returns {Promise<Object>} - Call information
- */
-export const startVAPICall = async () => {
-  try {
-    console.log('Starting voice session...');
-    
-    if (!vapiClient) {
-      vapiClient = new Vapi("4567fa6a-0035-4262-9fd9-81b3afb4bb34");
-    }
-    
-    const callConfig = {
-      assistant: {
-        assistantId: "72e746cd-4a01-472e-a086-4cec4bad8f6f"
-      }
-    };
-    
-    const call = await vapiClient.start("72e746cd-4a01-472e-a086-4cec4bad8f6f");
-    
-    return {
-      callId: call.id,
-      status: 'active'
-    };
-    
-  } catch (error) {
-    console.error('Error starting voice session:', error);
-    throw new Error('Failed to start voice session');
-  }
-};
-
-/**
- * Stop VAPI call
- * @returns {Promise<Object>} - Stop confirmation
- */
-export const stopVAPICall = async () => {
-  try {
-    console.log('Stopping voice session...');
-    
-    if (vapiClient) {
-      await vapiClient.stop();
-      return { status: 'stopped' };
-    } else {
-      throw new Error('No active call to stop');
-    }
-    
-  } catch (error) {
-    console.error('Error stopping voice session:', error);
-    throw new Error('Failed to stop voice session');
-  }
-};
-
-/**
- * Check if VAPI call is active
- * @returns {boolean} - Whether call is active
- */
-export const isVAPICallActive = () => {
-  return vapiClient && vapiClient.isActive();
-};
-
-// Data processing is handled separately by your backend
-// This file only handles VAPI start/stop calls
 
 
 // =============================================================================
@@ -362,9 +284,6 @@ export const htmlToPDF = async (htmlContent) => {
 // EXPORTS
 // =============================================================================
 export default {
-  startVAPICall,
-  stopVAPICall,
-  isVAPICallActive,
   generateHTMLResume,
   htmlToPDF
 };

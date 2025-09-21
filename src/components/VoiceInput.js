@@ -53,7 +53,7 @@ const VoiceInput = ({ onVoiceInput, isProcessing }) => {
   useEffect(() => {
     return () => {
       if (isCallActive) {
-        stopVAPICall();
+        vapi.stop();
       }
     };
   }, []);
