@@ -157,7 +157,6 @@ function App() {
         {/* Live Preview from Backend - Directly Under Voice Input */}
 
         <div className="live-preview-section">
-          <h2>Live Backend CV Preview</h2>
           <button className="btn btn-secondary" onClick={resetBackendResume} style={{ marginBottom: 12 }}>
             Reset Resume
           </button>

@@ -27,18 +27,7 @@ const ApplySection = () => {
               </ul>
             </div>
             
-            <div className="apply-card">
-              <div className="apply-icon">
-                <MapPin size={32} />
-              </div>
-              <h3>Spanish-Speaking Markets</h3>
-              <ul>
-                <li>Latin American companies</li>
-                <li>Spanish multinational corporations</li>
-                <li>Bilingual positions in the US</li>
-                <li>International organizations</li>
-              </ul>
-            </div>
+          
             
             <div className="apply-card">
               <div className="apply-icon">
@@ -53,19 +42,7 @@ const ApplySection = () => {
               </ul>
             </div>
             
-            <div className="apply-card">
-              <div className="apply-icon">
-                <Users size={32} />
-              </div>
-              <h3>Networking</h3>
-              <ul>
-                <li>Join Spanish professional groups</li>
-                <li>Attend bilingual networking events</li>
-                <li>Connect on LinkedIn in Spanish</li>
-                <li>Build relationships with recruiters</li>
-              </ul>
-            </div>
-            
+         
             <div className="apply-card">
               <div className="apply-icon">
                 <MessageSquare size={32} />
@@ -91,7 +68,7 @@ const ApplySection = () => {
                   <h4>LinkedIn</h4>
                   <ExternalLink size={16} />
                 </div>
-                <p>Professional networking and job search platform with Spanish-speaking opportunities worldwide.</p>
+                <p>Professional networking and job search platform with opportunities worldwide.</p>
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="job-board-link">
                   Visit LinkedIn
                 </a>

@@ -35,7 +35,7 @@ const AboutSection = () => {
                 <Globe size={32} />
               </div>
               <h3>Bilingual Support</h3>
-              <p>Create CVs in both Spanish and English, with automatic translation and localization features.</p>
+              <p>Speak into the application in Spanish or English and then watch as the AI creates CVs in English with automatic translation and localization features.</p>
             </div>
             
             <div className="about-card">
