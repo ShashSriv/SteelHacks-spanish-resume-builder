@@ -8,7 +8,7 @@ const AboutSection = () => {
         <div className="section-header">
           <h2 className="section-title">About</h2>
           <p className="section-subtitle">
-            Create professional resumes in Spanish using voice input and AI technology
+            Create professional CVs translating Spanish to English using voice input and AI technology
           </p>
         </div>
         
@@ -19,7 +19,7 @@ const AboutSection = () => {
                 <Mic size={32} />
               </div>
               <h3>Voice Input</h3>
-              <p>Speak naturally in Spanish to add your information. Our AI will process and translate your input to create a professional resume.</p>
+              <p>Speak naturally in Spanish to add your information. Our AI will process and translate your input to create a professional CV.</p>
             </div>
             
             <div className="about-card">
@@ -27,7 +27,7 @@ const AboutSection = () => {
                 <FileText size={32} />
               </div>
               <h3>Professional Format</h3>
-              <p>Generate clean, professional resumes with proper formatting and structure that employers expect to see.</p>
+              <p>Turn your words into opportunity. Generate clean, professional CVs with proper formatting and structure that employers expect to see. </p>
             </div>
             
             <div className="about-card">
@@ -35,7 +35,7 @@ const AboutSection = () => {
                 <Globe size={32} />
               </div>
               <h3>Bilingual Support</h3>
-              <p>Create resumes in both Spanish and English, with automatic translation and localization features.</p>
+              <p>Create CVs in both Spanish and English, with automatic translation and localization features.</p>
             </div>
             
             <div className="about-card">

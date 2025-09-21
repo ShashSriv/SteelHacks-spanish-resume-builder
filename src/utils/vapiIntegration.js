@@ -1,4 +1,4 @@
-// VAPI Integration utilities for Spanish resume builder
+// VAPI Integration utilities for LinguaCV
 // This file contains mock implementations that would be replaced with actual VAPI calls
 
 const VAPI_CONFIG = {

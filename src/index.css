@@ -212,7 +212,7 @@ code {
 
 /* Header Styles */
 .header {
-  background: white;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   padding: 16px 0;
   margin-bottom: 24px;
@@ -235,7 +235,7 @@ code {
 }
 
 .logo-icon {
-  color: #3b82f6;
+  color: white;
   width: 32px;
   height: 32px;
 }
@@ -243,7 +243,7 @@ code {
 .logo h1 {
   font-size: 24px;
   font-weight: 700;
-  color: #1f2937;
+  color: white;
   margin: 0;
 }
 
@@ -254,11 +254,11 @@ code {
 }
 
 .nav-link {
-  color: #6b7280;
+  color: white;
   text-decoration: none;
   font-weight: 500;
   font-size: 16px;
-  transition: color 0.2s ease;
+  transition: all 0.2s ease;
   padding: 8px 16px;
   background: none;
   border: none;
@@ -267,8 +267,8 @@ code {
 }
 
 .nav-link:hover {
-  color: #3b82f6;
-  background-color: #f8fafc;
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Voice Input Styles */
@@ -451,125 +451,3 @@ code {
   gap: 8px;
 }
 
-/* Resume Form Styles */
-.form-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.form-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.edit-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.resume-form {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
-}
-
-.form-section {
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 24px;
-  background-color: #fafafa;
-}
-
-.section-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 20px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #3b82f6;
-}
-
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.form-item {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 16px;
-}
-
-.form-item-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.form-item-header h5 {
-  font-size: 16px;
-  font-weight: 600;
-  color: #374151;
-  margin: 0;
-}
-
-.form-preview {
-  text-align: center;
-  padding: 32px;
-  color: #6b7280;
-}
-
-@media (max-width: 768px) {
-  .grid-2,
-  .grid-3 {
-    grid-template-columns: 1fr;
-  }
-  
-  .container {
-    padding: 0 16px;
-  }
-  
-  .card {
-    padding: 16px;
-  }
-  
-  .header-content {
-    flex-direction: column;
-    gap: 16px;
-    text-align: center;
-  }
-  
-  .header-nav {
-    gap: 16px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .nav-link {
-    font-size: 14px;
-  }
-  
-  .form-header {
-    flex-direction: column;
-    gap: 16px;
-    align-items: stretch;
-  }
-  
-  .section-header {
-    flex-direction: column;
-    gap: 16px;
-    align-items: stretch;
-  }
-  
-  .form-item-header {
-    flex-direction: column;
-    gap: 12px;
-    align-items: stretch;
-  }
-}
