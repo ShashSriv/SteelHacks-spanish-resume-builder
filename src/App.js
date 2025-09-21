@@ -113,62 +113,55 @@ function App() {
           <p>Speak in Spanish to create your professional CV</p>
         </div>
 
-        <div className="grid grid-2">
-          {/* Input Section */}
-          <div className="input-section">
-            <div className="card">
-              <div className="card-header">
-                <h2 className="card-title">Voice Input</h2>
-                <p className="card-subtitle">
-                  {sessionActive 
-                    ? 'Our assistant will guide you through the process - Just speak when asked'
-                    : 'Start a session to begin building your resume with voice'
-                  }
-                </p>
-              </div>
-
-              {!sessionActive ? (
-                <div className="session-controls">
-                  <button 
-                    className="btn btn-primary"
-                    onClick={startSession}
-                  >
-                    Start Voice Session
-                  </button>
-                </div>
-              ) : (
-                <>
-                  <VoiceInput 
-                    onVoiceInput={handleVoiceInput}
-                    isProcessing={isProcessing}
-                  />
-                  
-                  <button 
-                    className="btn btn-secondary"
-                    onClick={endSession}
-                    style={{ marginTop: '16px' }}
-                  >
-                    End Session
-                  </button>
-                </>
-              )}
+        {/* Voice Input Section - Full Width */}
+        <div className="voice-input-section">
+          <div className="card">
+            <div className="card-header">
+              <h2 className="card-title">Voice Input</h2>
+              <p className="card-subtitle">
+                {sessionActive 
+                  ? 'Our assistant will guide you through the process - Just speak when asked'
+                  : 'Start a session to begin building your resume with voice'
+                }
+              </p>
             </div>
-          </div>
 
-          {/* Preview Section */}
-          <div className="preview-section">
-            {/* Resume preview removed */}
+            {!sessionActive ? (
+              <div className="session-controls">
+                <button 
+                  className="btn btn-primary"
+                  onClick={startSession}
+                >
+                  Start Voice Session
+                </button>
+              </div>
+            ) : (
+              <>
+                <VoiceInput 
+                  onVoiceInput={handleVoiceInput}
+                  isProcessing={isProcessing}
+                />
+                
+                <button 
+                  className="btn btn-secondary"
+                  onClick={endSession}
+                  style={{ marginTop: '16px' }}
+                >
+                  End Session
+                </button>
+              </>
+            )}
           </div>
         </div>
 
-        {/* Live Preview from Backend */}
-        <div style={{ marginTop: '40px' }}>
+        {/* Live Preview from Backend - Right under voice input */}
+        <div className="live-preview-section">
           <h2>Live Backend CV Preview</h2>
           <button className="btn btn-secondary" onClick={resetBackendResume} style={{ marginBottom: 12 }}>
             Reset Backend CV
           </button>
           <ResPrev/>
-          </div>
+        </div>
       </main>
 
       {/* Additional Sections */}

@@ -26,17 +26,12 @@
   margin: 0 auto;
 }
 
-.input-section {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  min-height: 500px;
+.voice-input-section {
+  margin-bottom: 40px;
 }
 
-.preview-section {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+.live-preview-section {
+  margin-top: 0;
 }
 
 .session-controls {
