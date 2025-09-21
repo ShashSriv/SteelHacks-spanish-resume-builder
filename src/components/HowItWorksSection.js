@@ -7,7 +7,7 @@ const HowItWorksSection = () => {
         <div className="section-header">
           <h2 className="section-title">Process</h2>
           <p className="section-subtitle">
-            Simple steps to create your professional Spanish resume
+            Simple steps to create your professional CV
           </p>
         </div>
         
@@ -24,8 +24,8 @@ const HowItWorksSection = () => {
             <div className="step-item">
               <div className="step-number">2</div>
               <div className="step-content">
-                <h4>Speak Your Information</h4>
-                <p>Follow the prompts and speak your contact details, experience, education, and skills in Spanish.</p>
+                <h4>Speak Yourself Up</h4>
+                <p>Follow the prompts and speak your contact details, education, experience, and skills in Spanish, English, or a little bit of both.</p>
               </div>
             </div>
             
@@ -33,7 +33,7 @@ const HowItWorksSection = () => {
               <div className="step-number">3</div>
               <div className="step-content">
                 <h4>Review & Edit</h4>
-                <p>Review the generated content and make any necessary edits using the manual editor.</p>
+                <p>Review the generated content and if you want to make any necessary edits just press "End Session" and start a new session. UNLIMITED SESSIONS!</p>
               </div>
             </div>
             

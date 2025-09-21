@@ -25,7 +25,7 @@ const Header = () => {
         <div className="header-content">
           <div className="logo">
             <FileText className="logo-icon" />
-            <h1>Resume Builder</h1>
+            <h1>LinguaCV</h1>
           </div>
           <nav className="header-nav">
             <button 

@@ -1,4 +1,4 @@
-# Spanish Resume Builder
+# LinguaCV
 
 A React.js front-end application that allows Spanish-speaking users to create professional resumes using voice or text input, with automatic translation and LaTeX PDF generation.
 
@@ -25,12 +25,7 @@ A React.js front-end application that allows Spanish-speaking users to create pr
    - Progress bar showing current step
    - Clean professional format
 
-5. **Manual Resume Editor**
-   - Complete form for manual editing
-   - Sections: Contact, Experience, Education, Skills, Languages
-   - Intuitive English interface
-
-6. **PDF Generation**
+5. **PDF Generation**
    - LaTeX generation from structured data
    - Direct PDF download
    - Professional one-page format
@@ -49,8 +44,6 @@ src/
 │   ├── VoiceInput.js          # Voice input component
 │   ├── TextInput.js           # Text input component
 │   ├── TranscriptPreview.js   # Transcript preview
-│   ├── ResumePreview.js       # Resume preview
-│   └── ResumeForm.js          # Manual resume editor
 ├── utils/
 │   └── vapiIntegration.js     # VAPI integration utilities
 ├── App.js                     # Main component
@@ -101,7 +94,7 @@ The application will be available at `http://localhost:3000`
 4. **Education**: Mention your academic background
 5. **Skills**: List your technical competencies
 6. **Professional Summary**: Write a summary of your profile
-7. **Download PDF**: Generate and download your resume in PDF format
+6. **Download PDF**: Generate and download your CV in PDF format
 
 ### Input Methods
 
@@ -133,7 +126,7 @@ The application is ready to integrate with VAPI (Voice AI Platform) for:
 
 ## Data Structure
 
-The resume is stored in JSON format with the following structure:
+The CV is stored in JSON format with the following structure:
 
 ```json
 {
