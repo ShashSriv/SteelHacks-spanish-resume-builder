@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Mic, Square } from 'lucide-react';
-import { startVAPICall, stopVAPICall } from '../utils/vapiIntegration';
+import  Vapi  from '@vapi-ai/web';
+const vapi = new Vapi("4567fa6a-0035-4262-9fd9-81b3afb4bb34");
 
 const VoiceInput = ({ onVoiceInput, isProcessing }) => {
   const [isCallActive, setIsCallActive] = useState(false);
@@ -11,7 +12,7 @@ const VoiceInput = ({ onVoiceInput, isProcessing }) => {
       // Start recording
       try {
         console.log('Starting voice session...');
-        await startVAPICall();
+        await vapi.start("72e746cd-4a01-472e-a086-4cec4bad8f6f");
         setIsCallActive(true);
         setCallTime(0);
         console.log('Voice session started');
@@ -23,7 +24,7 @@ const VoiceInput = ({ onVoiceInput, isProcessing }) => {
       // Stop recording
       try {
         console.log('Stopping voice session...');
-        await stopVAPICall();
+        vapi.stop();
         setIsCallActive(false);
         console.log('Voice session stopped');
         

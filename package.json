@@ -10,6 +10,10 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@daily-co/react-native-daily-js": "^0.81.0",
+    "@daily-co/react-native-webrtc": "118.0.3-daily.4",
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@vapi-ai/react-native": "^0.3.0",
     "@vapi-ai/web": "^2.3.10",
     "axios": "^1.6.0",
     "html2canvas": "^1.4.1",
@@ -17,6 +21,9 @@
     "lucide-react": "^0.294.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-native-background-timer": "^2.4.1",
+    "react-native-dotenv": "^3.4.11",
+    "react-native-get-random-values": "^1.11.0",
     "react-scripts": "5.0.1"
   },
   "browserslist": {

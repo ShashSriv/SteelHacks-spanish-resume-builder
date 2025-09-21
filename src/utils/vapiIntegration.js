@@ -1,15 +1,15 @@
 // Simple VAPI Integration for Spanish Resume Builder
 // This file uses @vapi-ai/web SDK for basic voice recording
 
-import { Vapi } from '@vapi-ai/web';
+import  Vapi  from '@vapi-ai/web';
 
 // =============================================================================
 // VAPI CONFIGURATION
 // =============================================================================
 // Single configuration object - replace with your actual values
 const VAPI_CONFIG = {
-  API_KEY: 'your-vapi-api-key-here',
-  ASSISTANT_ID: 'your-assistant-id',
+  API_KEY: "4567fa6a-0035-4262-9fd9-81b3afb4bb34",
+  ASSISTANT_ID: "72e746cd-4a01-472e-a086-4cec4bad8f6f",
 };
 
 // Initialize VAPI client
@@ -28,16 +28,16 @@ export const startVAPICall = async () => {
     console.log('Starting voice session...');
     
     if (!vapiClient) {
-      vapiClient = new Vapi(VAPI_CONFIG.API_KEY);
+      vapiClient = new Vapi("4567fa6a-0035-4262-9fd9-81b3afb4bb34");
     }
     
     const callConfig = {
       assistant: {
-        assistantId: VAPI_CONFIG.ASSISTANT_ID
+        assistantId: "72e746cd-4a01-472e-a086-4cec4bad8f6f"
       }
     };
     
-    const call = await vapiClient.start(callConfig);
+    const call = await vapiClient.start("72e746cd-4a01-472e-a086-4cec4bad8f6f");
     
     return {
       callId: call.id,
