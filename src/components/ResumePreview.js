@@ -14,11 +14,7 @@ const ResumePreview = ({ resumeData, currentStep, onDownloadPDF }) => {
     }
   };
 
-  const getStepProgress = () => {
-    const steps = ['contact', 'experience', 'education', 'skills', 'summary'];
-    const currentIndex = steps.indexOf(currentStep);
-    return ((currentIndex + 1) / steps.length) * 100;
-  };
+
 
   return (
     <div className="card">
@@ -32,14 +28,8 @@ const ResumePreview = ({ resumeData, currentStep, onDownloadPDF }) => {
             </button>
           </div>
         </div>
-        <div className="progress-bar">
-          <div 
-            className="progress-fill" 
-            style={{ width: `${getStepProgress()}%` }}
-          ></div>
-        </div>
         <p className="card-subtitle">
-          Step {['contact', 'experience', 'education', 'skills', 'summary'].indexOf(currentStep) + 1} of 5
+          Live preview of your resume
         </p>
       </div>
 
@@ -125,7 +115,7 @@ const ResumePreview = ({ resumeData, currentStep, onDownloadPDF }) => {
             <FileText className="empty-state-icon" />
             <h4 className="empty-state-title">Empty Resume</h4>
             <p className="empty-state-description">
-              Start adding information using voice or text to see the preview here
+              Start adding information using voice or the form below to see the preview here
             </p>
           </div>
         )}
