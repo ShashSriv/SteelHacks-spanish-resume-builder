@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import VoiceInput from './components/VoiceInput';
 import TextInput from './components/TextInput';
+import TranscriptPreview from './components/TranscriptPreview';
 import ResumePreview from './components/ResumePreview';
 import ResumeForm from './components/ResumeForm';
-import { processVoiceWithVAPI, processTextWithVAPI, generateHTMLResume, htmlToPDF } from './utils/vapiIntegration';
+import { processVoiceWithVAPI, processTextWithVAPI, generateLaTeXResume, latexToPDF } from './utils/vapiIntegration';
 import './App.css';
-import ResPrev from './components/ResPrev'
 
 function App() {
   const [resumeData, setResumeData] = useState({
@@ -57,13 +57,39 @@ function App() {
     }
   };
 
+  // Handle text input processing
+  const handleTextInput = async (text) => {
+    setTranscript(text);
+    setIsProcessing(true);
+    
+    try {
+      const response = await processTextWithVAPI(text, currentStep, resumeData);
+      
+      if (response.translation) {
+        setTranslation(response.translation);
+      }
+      
+      if (response.updatedData) {
+        setResumeData(response.updatedData);
+      }
+      
+      if (response.nextStep) {
+        setCurrentStep(response.nextStep);
+      }
+    } catch (error) {
+      console.error('Error processing text input:', error);
+      alert('Error processing text. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   // Handle PDF download
   const handleDownloadPDF = async () => {
     try {
       setIsProcessing(true);
-      const htmlContent = await generateHTMLResume(resumeData);
-      const pdfBlob = await htmlToPDF(htmlContent);
+      const latexContent = await generateLaTeXResume(resumeData);
+      const pdfBlob = await latexToPDF(latexContent);
       
       // Create download link
       const url = URL.createObjectURL(pdfBlob);
@@ -95,24 +121,14 @@ function App() {
     setSessionActive(false);
   };
 
-  const resetBackendResume = async () => {
-  try {
-    const res = await fetch('http://localhost:8000/reset', { method: 'POST' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    alert('Backend resume reset.');
-  } catch (e) {
-    alert(e?.message || 'Reset failed');
-  }
-};
-
   return (
     <div className="App">
-      <Header />
+      <Header onDownloadPDF={handleDownloadPDF} />
       
       <main className="container">
         <div className="hero-section">
           <h1>Spanish Resume Builder</h1>
-          <p>Speak in Spanish to create your professional resume</p>
+          <p>Speak or type in Spanish to create your professional resume</p>
         </div>
 
         <div className="grid grid-2">
@@ -123,8 +139,8 @@ function App() {
                 <h2 className="card-title">Information Input</h2>
                 <p className="card-subtitle">
                   {sessionActive 
-                    ? `Current step: ${getStepTitle(currentStep)} - Speak to add information`
-                    : 'Start a session to begin building your resume with voice'
+                    ? `Current step: ${getStepTitle(currentStep)}`
+                    : 'Start a session to begin'
                   }
                 </p>
               </div>
@@ -146,6 +162,16 @@ function App() {
                     currentStep={currentStep}
                   />
                   
+                  <div className="divider">
+                    <span>o</span>
+                  </div>
+                  
+                  <TextInput 
+                    onTextInput={handleTextInput}
+                    isProcessing={isProcessing}
+                    currentStep={currentStep}
+                  />
+                  
                   <button 
                     className="btn btn-secondary"
                     onClick={endSession}
@@ -157,6 +183,11 @@ function App() {
               )}
             </div>
 
+            <TranscriptPreview 
+              transcript={transcript}
+              translation={translation}
+              isProcessing={isProcessing}
+            />
           </div>
 
           {/* Preview Section */}
@@ -174,14 +205,6 @@ function App() {
           resumeData={resumeData}
           setResumeData={setResumeData}
         />
-        {/* Live Preview from Backend */}
-        <div style={{ marginTop: '40px' }}>
-          <h2>Live Backend Resume Preview</h2>
-          <button className="btn btn-secondary" onClick={resetBackendResume} style={{ marginBottom: 12 }}>
-            Reset Backend Resume
-          </button>
-          <ResPrev/>
-          </div>
       </main>
     </div>
   );
