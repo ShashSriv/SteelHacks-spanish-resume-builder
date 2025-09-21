@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { FileText, Download, Eye } from 'lucide-react';
+import { generateHTMLResume, htmlToPDF } from '../utils/vapiIntegration';
 
 /** ===== Config ===== */
 const API_URL = "http://localhost:8000/latest"; // adjust if needed
@@ -26,6 +27,7 @@ export default function LiveResumePreview() {
   const [error, setError] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
   const [delay, setDelay] = useState(BASE_POLL_MS);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const timeoutRef = useRef(null);
 
   // Manual refresh
@@ -41,6 +43,82 @@ export default function LiveResumePreview() {
     } catch (e) {
       setError(e?.message || "Failed to fetch");
       setDelay((d) => nextDelay(d));
+    }
+  };
+
+  // Convert backend data to resume format for PDF generation
+  const convertBackendDataToResumeFormat = (backendData) => {
+    if (!backendData) return null;
+
+    const personal = backendData.personal || {};
+    const work = backendData.work || [];
+    const edu = backendData.education || {};
+    const skills = backendData.skills?.skills || [];
+    const summary = backendData.summary || '';
+
+    return {
+      contact: {
+        name: personal.name || '',
+        email: personal.email || '',
+        phone: personal.phone || '',
+        address: personal.location || '',
+        linkedin: ''
+      },
+      experience: work.map(w => ({
+        title: w.role || '',
+        company: '', // Backend doesn't have company field
+        dates: dateRange(w.start, w.end),
+        description: [w.description1, w.description2].filter(Boolean).join('\n')
+      })),
+      education: edu.school || edu.degree ? [{
+        degree: edu.degree || '',
+        institution: edu.school || '',
+        dates: dateRange(edu.start, edu.end)
+      }] : [],
+      skills: skills,
+      languages: [],
+      summary: summary
+    };
+  };
+
+  // Handle PDF download
+  const handleDownloadPDF = async () => {
+    if (!data) {
+      alert('No resume data available to download');
+      return;
+    }
+
+    try {
+      setIsGeneratingPDF(true);
+      
+      // Convert backend data to resume format
+      const resumeData = convertBackendDataToResumeFormat(data);
+      
+      if (!resumeData) {
+        alert('Unable to convert data for PDF generation');
+        return;
+      }
+
+      // Generate HTML and convert to PDF
+      const htmlContent = await generateHTMLResume(resumeData);
+      const pdfBlob = await htmlToPDF(htmlContent);
+      
+      // Create download link
+      const url = URL.createObjectURL(pdfBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `CV_${resumeData.contact.name || 'Resume'}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
+      alert('PDF generated successfully');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Error generating PDF. Please try again.');
+    } finally {
+      setIsGeneratingPDF(false);
     }
   };
 
@@ -105,9 +183,13 @@ export default function LiveResumePreview() {
         <div className="resume-preview-header">
           <h3 className="card-title">Live Resume Preview</h3>
           <div className="preview-actions">
-            <button className="btn" onClick={refresh}>
-              <Eye size={16} />
-              Refresh
+            <button 
+              className="btn btn-primary" 
+              onClick={handleDownloadPDF}
+              disabled={isGeneratingPDF || !data}
+            >
+              <Download size={16} />
+              {isGeneratingPDF ? 'Generating...' : 'Download PDF'}
             </button>
           </div>
         </div>
