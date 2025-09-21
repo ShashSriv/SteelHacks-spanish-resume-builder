@@ -84,6 +84,9 @@ const ApplySection = () => {
             <h3>Popular Job Boards</h3>
             <div className="job-boards-grid">
               <div className="job-board-card">
+                <div className="job-board-logo">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn Logo" className="company-logo" />
+                </div>
                 <div className="job-board-header">
                   <h4>LinkedIn</h4>
                   <ExternalLink size={16} />
@@ -95,6 +98,9 @@ const ApplySection = () => {
               </div>
               
               <div className="job-board-card">
+                <div className="job-board-logo">
+                  <img src="/images/glassdoor.png" alt="Glassdoor Logo" className="company-logo" />
+                </div>
                 <div className="job-board-header">
                   <h4>Glassdoor</h4>
                   <ExternalLink size={16} />
@@ -106,6 +112,9 @@ const ApplySection = () => {
               </div>
               
               <div className="job-board-card">
+                <div className="job-board-logo">
+                  <img src="/images/indeed.png" alt="Indeed Logo" className="company-logo" />
+                </div>
                 <div className="job-board-header">
                   <h4>Indeed</h4>
                   <ExternalLink size={16} />
