@@ -258,17 +258,40 @@ code {
   text-decoration: none;
   font-weight: 500;
   font-size: 16px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   padding: 8px 16px;
   background: none;
   border: none;
   cursor: pointer;
   border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: white;
+  border-radius: 1px;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link.active::after {
+  width: 100%;
 }
 
 .nav-link:hover {
   color: white;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* Voice Input Styles */
