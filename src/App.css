@@ -44,27 +44,6 @@
   padding: 32px 0;
 }
 
-.divider {
-  display: flex;
-  align-items: center;
-  margin: 24px 0;
-  text-align: center;
-  color: #6b7280;
-  font-weight: 500;
-}
-
-.divider::before,
-.divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background-color: #e5e7eb;
-}
-
-.divider span {
-  padding: 0 16px;
-  background-color: #f8fafc;
-}
 
 .step-indicator {
   display: flex;
