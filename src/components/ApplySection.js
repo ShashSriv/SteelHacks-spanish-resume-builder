@@ -8,7 +8,7 @@ const ApplySection = () => {
         <div className="section-header">
           <h2 className="section-title">Apply for Jobs</h2>
           <p className="section-subtitle">
-            Use your Spanish resume to apply for positions and advance your career
+            Use your professional CV to apply for positions and advance your career
           </p>
         </div>
         

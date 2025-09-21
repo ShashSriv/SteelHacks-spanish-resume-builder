@@ -1,7 +1,7 @@
 {
   "name": "spanish-resume-builder",
   "version": "1.0.0",
-  "description": "Front-end UI for Spanish resume builder with voice input and LaTeX generation",
+  "description": "Front-end UI for LinguaCV - Spanish CV builder with voice input and LaTeX generation",
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
