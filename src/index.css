@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -212,6 +216,10 @@ code {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   padding: 16px 0;
   margin-bottom: 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .header-content {
@@ -237,6 +245,30 @@ code {
   font-weight: 700;
   color: #1f2937;
   margin: 0;
+}
+
+.header-nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.nav-link {
+  color: #6b7280;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  transition: color 0.2s ease;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.nav-link:hover {
+  color: #3b82f6;
+  background-color: #f8fafc;
 }
 
 /* Voice Input Styles */
@@ -511,6 +543,16 @@ code {
     flex-direction: column;
     gap: 16px;
     text-align: center;
+  }
+  
+  .header-nav {
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .nav-link {
+    font-size: 14px;
   }
   
   .form-header {
