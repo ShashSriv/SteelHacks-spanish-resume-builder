@@ -248,195 +248,146 @@ export const generateHTMLResume = async (resumeData) => {
     <title>Resume - ${resumeData.contact.name || 'Resume'}</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Times New Roman', serif;
             line-height: 1.6;
             margin: 0;
-            padding: 40px;
-            color: #333;
+            padding: 0;
+            color: #1f2937;
             background: white;
         }
         .resume-container {
             max-width: 800px;
             margin: 0 auto;
             background: white;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            padding: 40px;
+            padding: 24px;
         }
-        .header {
+        .resume-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1f2937;
             text-align: center;
-            border-bottom: 3px solid #2c5aa0;
-            padding-bottom: 25px;
-            margin-bottom: 35px;
-        }
-        .name {
-            font-size: 32px;
-            font-weight: bold;
-            color: #2c5aa0;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-        .contact-info {
-            font-size: 16px;
-            color: #666;
-            line-height: 1.8;
-        }
-        .contact-info span {
-            margin: 0 15px;
-            display: inline-block;
-        }
-        .section {
-            margin-bottom: 30px;
-            page-break-inside: avoid;
-        }
-        .section-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: #2c5aa0;
-            border-bottom: 2px solid #2c5aa0;
-            padding-bottom: 8px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .item {
-            margin-bottom: 20px;
-            padding-left: 20px;
-            border-left: 3px solid #e8f4fd;
-        }
-        .item-title {
-            font-weight: bold;
-            font-size: 18px;
             margin-bottom: 8px;
-            color: #2c5aa0;
         }
-        .item-company {
-            font-style: italic;
-            color: #666;
-            margin-bottom: 5px;
-            font-size: 16px;
+        .resume-contact {
+            text-align: center;
+            color: #6b7280;
+            margin-bottom: 24px;
         }
-        .item-dates {
-            color: #888;
-            font-size: 14px;
+        .resume-section {
+            margin-bottom: 24px;
+        }
+        .resume-section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1f2937;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 4px;
             margin-bottom: 12px;
-            font-weight: 500;
         }
-        .item-description {
-            font-size: 15px;
-            line-height: 1.7;
-            text-align: justify;
-            margin-top: 10px;
+        .resume-item {
+            margin-bottom: 16px;
         }
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 15px;
+        .resume-item-title {
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 4px;
         }
-        .skill-tag {
-            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            color: #333;
-            font-weight: 500;
-            border: 1px solid #ddd;
-        }
-        .languages-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 15px;
-        }
-        .language-tag {
-            background: linear-gradient(135deg, #e8f4fd, #d1e7f7);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            color: #2c5aa0;
-            font-weight: 500;
-            border: 1px solid #b8d4f0;
-        }
-        .summary-section {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid #2c5aa0;
-            margin: 20px 0;
-        }
-        .summary-text {
-            font-size: 16px;
-            line-height: 1.7;
-            text-align: justify;
+        .resume-item-company {
+            color: #6b7280;
             font-style: italic;
-            color: #444;
+            margin-bottom: 4px;
+        }
+        .resume-item-dates {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .resume-item-description {
+            color: #374151;
+            font-size: 14px;
+        }
+        .resume-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .resume-skill {
+            background-color: #f3f4f6;
+            color: #374151;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="resume-container">
-        <div class="header">
-            <div class="name">${resumeData.contact.name || 'Your Name'}</div>
-            <div class="contact-info">
-                ${resumeData.contact.email ? `<span>${resumeData.contact.email}</span>` : ''}
-                ${resumeData.contact.phone ? `<span>${resumeData.contact.phone}</span>` : ''}
-                ${resumeData.contact.address ? `<span>${resumeData.contact.address}</span>` : ''}
-                ${resumeData.contact.linkedin ? `<span>${resumeData.contact.linkedin}</span>` : ''}
+        <!-- Contact Information -->
+        ${resumeData.contact.name ? `
+        <div class="resume-section">
+            <div class="resume-name">${resumeData.contact.name}</div>
+            <div class="resume-contact">
+                ${resumeData.contact.email ? `${resumeData.contact.email}` : ''}
+                ${resumeData.contact.phone ? ` • ${resumeData.contact.phone}` : ''}
+                ${resumeData.contact.address ? ` • ${resumeData.contact.address}` : ''}
+                ${resumeData.contact.linkedin ? ` • ${resumeData.contact.linkedin}` : ''}
             </div>
         </div>
+        ` : ''}
 
+        <!-- Professional Summary -->
         ${resumeData.summary ? `
-        <div class="section">
-            <div class="section-title">Professional Summary</div>
-            <div class="summary-section">
-                <div class="summary-text">${resumeData.summary}</div>
-            </div>
+        <div class="resume-section">
+            <div class="resume-section-title">Professional Summary</div>
+            <div class="resume-item-description">${resumeData.summary}</div>
         </div>
         ` : ''}
 
+        <!-- Work Experience -->
         ${resumeData.experience.length > 0 ? `
-        <div class="section">
-            <div class="section-title">Work Experience</div>
+        <div class="resume-section">
+            <div class="resume-section-title">Work Experience</div>
             ${resumeData.experience.map(exp => `
-            <div class="item">
-                <div class="item-title">${exp.title || 'Position'}</div>
-                <div class="item-company">${exp.company || 'Company'}</div>
-                <div class="item-dates">${exp.dates || 'Dates'}</div>
-                <div class="item-description">${exp.description || ''}</div>
+            <div class="resume-item">
+                <div class="resume-item-title">${exp.title || 'Position'}</div>
+                ${exp.company ? `<div class="resume-item-company">${exp.company}</div>` : ''}
+                <div class="resume-item-dates">${exp.dates || 'Dates'}</div>
+                ${exp.description ? `<div class="resume-item-description">${exp.description}</div>` : ''}
             </div>
             `).join('')}
         </div>
         ` : ''}
 
+        <!-- Education -->
         ${resumeData.education.length > 0 ? `
-        <div class="section">
-            <div class="section-title">Education</div>
+        <div class="resume-section">
+            <div class="resume-section-title">Education</div>
             ${resumeData.education.map(edu => `
-            <div class="item">
-                <div class="item-title">${edu.degree || 'Degree'}</div>
-                <div class="item-company">${edu.institution || 'Institution'}</div>
-                <div class="item-dates">${edu.dates || 'Dates'}</div>
+            <div class="resume-item">
+                <div class="resume-item-title">${edu.degree || 'Degree'}</div>
+                <div class="resume-item-company">${edu.institution || 'Institution'}</div>
+                <div class="resume-item-dates">${edu.dates || 'Dates'}</div>
             </div>
             `).join('')}
         </div>
         ` : ''}
 
+        <!-- Skills -->
         ${resumeData.skills.length > 0 ? `
-        <div class="section">
-            <div class="section-title">Skills</div>
-            <div class="skills-list">
-                ${resumeData.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+        <div class="resume-section">
+            <div class="resume-section-title">Skills</div>
+            <div class="resume-skills">
+                ${resumeData.skills.map(skill => `<span class="resume-skill">${skill}</span>`).join('')}
             </div>
         </div>
         ` : ''}
 
+        <!-- Languages -->
         ${resumeData.languages.length > 0 ? `
-        <div class="section">
-            <div class="section-title">Languages</div>
-            <div class="languages-list">
-                ${resumeData.languages.map(lang => `<span class="language-tag">${lang}</span>`).join('')}
+        <div class="resume-section">
+            <div class="resume-section-title">Languages</div>
+            <div class="resume-skills">
+                ${resumeData.languages.map(lang => `<span class="resume-skill">${lang}</span>`).join('')}
             </div>
         </div>
         ` : ''}
@@ -465,19 +416,25 @@ export const htmlToPDF = async (htmlContent) => {
   tempContainer.style.top = '0';
   tempContainer.style.width = '800px';
   tempContainer.style.backgroundColor = 'white';
+  tempContainer.style.fontFamily = 'Times New Roman, serif';
   document.body.appendChild(tempContainer);
   
   try {
-    // Convert HTML to canvas
+    // Convert HTML to canvas with high quality settings
     const canvas = await html2canvas(tempContainer, {
-      scale: 2,
+      scale: 3, // Higher scale for better quality
       useCORS: true,
       allowTaint: true,
-      backgroundColor: '#ffffff'
+      backgroundColor: '#ffffff',
+      logging: false,
+      width: 800,
+      height: tempContainer.scrollHeight,
+      scrollX: 0,
+      scrollY: 0
     });
     
     // Create PDF from canvas
-    const imgData = canvas.toDataURL('image/png');
+    const imgData = canvas.toDataURL('image/png', 1.0); // Maximum quality
     const pdf = new jsPDF('p', 'mm', 'a4');
     
     const imgWidth = 210; // A4 width in mm
