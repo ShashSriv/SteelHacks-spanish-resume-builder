@@ -1,20 +1,40 @@
 from flask import Flask, jsonify, request
 import helper_classes
+from flask_cors import CORS
 
 
 app = Flask(__name__)
-
+CORS(app)
 
 
 # ----- global resume instance -----
-resume = helper_classes.Resume()
-resume.personal = helper_classes.Personal()
-resume.work1 = helper_classes.Work()
-resume.work2 = helper_classes.Work()
-resume.work3 = helper_classes.Work()
-resume.certification = helper_classes.Certification()
-resume.education = helper_classes.Education()
-resume.skills = helper_classes.Skills()
+
+def init_resume():
+    r = helper_classes.Resume()
+    r.personal = helper_classes.Personal()
+    r.work1 = helper_classes.Work()
+    r.work2 = helper_classes.Work()
+    r.work3 = helper_classes.Work()
+    r.certification = helper_classes.Certification()
+    r.education = helper_classes.Education()
+    r.skills = helper_classes.Skills()
+    return r
+
+resume = init_resume()
+
+def ensure_list(x, name):
+    if x is None:
+        return []
+    if not isinstance(x, list):
+        raise ValueError(f"'{name}' must be a list.")
+    return x
+
+def ensure_map(x):
+    if x is None:
+        return {}
+    if not isinstance(x, dict):
+        raise ValueError("Payload must be a JSON object at the top level.")
+    return x
 
 @app.route("/data", methods=["POST"])
 def get_data_from_vapi():
@@ -82,6 +102,13 @@ def get_data_from_vapi():
 @app.route("/latest", methods=["GET"])
 def latest():
     return jsonify(resume.to_dict()), 200
+
+@app.route("/reset", methods=["POST"])
+def reset():
+    global resume
+    resume = init_resume()
+    return jsonify({"ok": True, "message": "Resume reset to empty defaults."}), 200
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
