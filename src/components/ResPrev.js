@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { FileText, Download, Eye } from 'lucide-react';
 
 /** ===== Config ===== */
 const API_URL = "http://localhost:8000/latest"; // adjust if needed
@@ -9,75 +10,6 @@ function nextDelay(curr) {
   return Math.min(curr * 2, MAX_BACKOFF_MS);
 }
 
-/** ===== Minimal inline styles ===== */
-const s = {
-  page: {
-    maxWidth: 800,
-    margin: "24px auto",
-    padding: "28px 32px",
-    border: "1px solid #e5e7eb",
-    borderRadius: 12,
-    fontFamily:
-      "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial",
-    color: "#111827",
-    background: "#ffffff",
-  },
-  headerRow: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-    gap: 16,
-    borderBottom: "2px solid #111827",
-    paddingBottom: 10,
-    marginBottom: 16,
-  },
-  name: { fontSize: 28, fontWeight: 800, lineHeight: 1.15 },
-  contact: { textAlign: "right", fontSize: 14, lineHeight: 1.6 },
-  section: { marginTop: 18 },
-  sectionTitle: { fontWeight: 700, fontSize: 16, letterSpacing: 0.4 },
-  rowBetween: {
-    display: "flex",
-    justifyContent: "space-between",
-    gap: 16,
-    marginTop: 8,
-  },
-  role: { fontWeight: 600 },
-  date: { color: "#374151", whiteSpace: "nowrap" },
-  bulletList: { margin: "6px 0 0 18px" },
-  bullet: { margin: "2px 0" },
-  pillWrap: { display: "flex", flexWrap: "wrap", gap: 8, marginTop: 8 },
-  pill: {
-    border: "1px solid #d1d5db",
-    padding: "4px 10px",
-    borderRadius: 999,
-    fontSize: 13,
-    color: "#111827",
-    background: "#f9fafb",
-  },
-  summary: { marginTop: 8, fontSize: 14, color: "#111827" },
-  small: { fontSize: 13, color: "#4b5563" },
-  faint: { color: "#6b7280" },
-  hr: { border: 0, height: 1, background: "#e5e7eb", margin: "12px 0" },
-  muted: { color: "#6b7280", fontSize: 13 },
-  banner: {
-    background: "#FEF2F2",
-    color: "#991B1B",
-    border: "1px solid #FCA5A5",
-    borderRadius: 8,
-    padding: "10px 12px",
-    marginBottom: 12,
-    fontSize: 14,
-  },
-  controls: { display: "flex", gap: 8, alignItems: "center", marginBottom: 8 },
-  btn: {
-    border: "1px solid #d1d5db",
-    background: "#f9fafb",
-    padding: "6px 10px",
-    borderRadius: 8,
-    cursor: "pointer",
-    fontSize: 14,
-  },
-};
 
 // Utility: safe join date range
 function dateRange(start, end) {
@@ -161,115 +93,146 @@ export default function LiveResumePreview() {
     }, []);
   }, [personal]);
 
+  const hasContent = personal?.name || 
+                    work.length > 0 || 
+                    (edu?.school || edu?.degree) || 
+                    skills.length > 0 || 
+                    summaryText;
+
   return (
-    <main style={s.page} aria-busy={!data && !error} aria-live="polite">
-      {/* Controls & status */}
-      <div style={s.controls}>
-        <button style={s.btn} onClick={refresh}>Refresh now</button>
-        {lastUpdated && <span style={s.muted}>Last updated: {lastUpdated}</span>}
+    <div className="card">
+      <div className="card-header">
+        <div className="resume-preview-header">
+          <h3 className="card-title">Live Resume Preview</h3>
+          <div className="preview-actions">
+            <button className="btn" onClick={refresh}>
+              <Eye size={16} />
+              Refresh
+            </button>
+          </div>
+        </div>
+        {lastUpdated && (
+          <p className="card-subtitle">
+            Last updated: {lastUpdated}
+          </p>
+        )}
         {error && (
-          <span style={{ ...s.muted, color: "#991B1B" }}>
+          <p className="card-subtitle" style={{ color: "#991B1B" }}>
             (auto-retrying in ~{Math.min(delay / 1000, MAX_BACKOFF_MS / 1000)}s)
-          </span>
+          </p>
         )}
       </div>
+
       {error && (
-        <div role="alert" style={s.banner}>
+        <div role="alert" className="banner" style={{
+          background: "#FEF2F2",
+          color: "#991B1B",
+          border: "1px solid #FCA5A5",
+          borderRadius: 8,
+          padding: "10px 12px",
+          margin: "12px 24px",
+          fontSize: 14,
+        }}>
           <strong>Error:</strong> {error}
         </div>
       )}
 
-      {/* Header */}
-      <header style={s.headerRow}>
-        <div>
-          <div style={s.name}>{personal?.name || "Your Name"}</div>
-        </div>
-        <div style={s.contact}>{contactLine || <span style={s.muted}>location | email | phone</span>}</div>
-      </header>
+      <div className="resume-preview-container">
+        {hasContent ? (
+          <div className="resume-preview-content">
+            {/* Contact Information */}
+            {personal?.name && (
+              <div className="resume-section">
+                <div className="resume-name">{personal.name}</div>
+                <div className="resume-contact">{contactLine || <span style={{ color: "#6b7280" }}>location • email • phone</span>}</div>
+              </div>
+            )}
 
-      {/* Summary (optional) */}
-      {summaryText && (
-        <section style={s.section}>
-          <div style={s.sectionTitle}>SUMMARY</div>
-          <p style={s.summary}>{summaryText}</p>
-          <hr style={s.hr} />
-        </section>
-      )}
+            {/* Professional Summary */}
+            {summaryText && (
+              <div className="resume-section">
+                <div className="resume-section-title">Professional Summary</div>
+                <div className="resume-item-description">{summaryText}</div>
+              </div>
+            )}
 
-      {/* Education */}
-      {(edu?.school || edu?.degree || edu?.start || edu?.end) && (
-        <section style={s.section}>
-          <div style={s.sectionTitle}>EDUCATION</div>
-          <div style={s.rowBetween}>
-            <div>
-              <div style={s.role}>{edu?.school}</div>
-              <div style={s.small}>{edu?.degree}</div>
-            </div>
-            <div style={s.date}>{dateRange(edu?.start, edu?.end)}</div>
-          </div>
-          <hr style={s.hr} />
-        </section>
-      )}
-
-      {/* Experience (up to 3 from backend) */}
-      {work.filter(w => w && (w.role || w.start || w.end || w.description1 || w.description2)).length > 0 && (
-        <section style={s.section}>
-          <div style={s.sectionTitle}>EXPERIENCE</div>
-          {work.map((w, i) => {
-            const hasContent = w && (w.role || w.start || w.end || w.description1 || w.description2);
-            if (!hasContent) return null;
-            return (
-              <div key={i} style={{ marginTop: 8 }}>
-                <div style={s.rowBetween}>
-                  <div style={s.role}>{w.role}</div>
-                  <div style={s.date}>{dateRange(w.start, w.end)}</div>
+            {/* Education */}
+            {(edu?.school || edu?.degree || edu?.start || edu?.end) && (
+              <div className="resume-section">
+                <div className="resume-section-title">Education</div>
+                <div className="resume-item">
+                  <div className="resume-item-title">{edu?.school}</div>
+                  <div className="resume-item-company">{edu?.degree}</div>
+                  <div className="resume-item-dates">{dateRange(edu?.start, edu?.end)}</div>
                 </div>
-                <ul style={s.bulletList}>
-                  {w.description1 && <li style={s.bullet}>{w.description1}</li>}
-                  {w.description2 && <li style={s.bullet}>{w.description2}</li>}
+              </div>
+            )}
+
+            {/* Experience */}
+            {work.filter(w => w && (w.role || w.start || w.end || w.description1 || w.description2)).length > 0 && (
+              <div className="resume-section">
+                <div className="resume-section-title">Work Experience</div>
+                {work.map((w, i) => {
+                  const hasContent = w && (w.role || w.start || w.end || w.description1 || w.description2);
+                  if (!hasContent) return null;
+                  return (
+                    <div key={i} className="resume-item">
+                      <div className="resume-item-title">{w.role}</div>
+                      <div className="resume-item-dates">{dateRange(w.start, w.end)}</div>
+                      <div className="resume-item-description">
+                        <ul style={{ margin: "6px 0 0 18px", padding: 0 }}>
+                          {w.description1 && <li style={{ margin: "2px 0" }}>{w.description1}</li>}
+                          {w.description2 && <li style={{ margin: "2px 0" }}>{w.description2}</li>}
+                        </ul>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* Certifications */}
+            {certs.some(c => c && (c.name || c.issuer || c.year)) && (
+              <div className="resume-section">
+                <div className="resume-section-title">Certifications</div>
+                <ul style={{ margin: "8px 0 0 18px", padding: 0 }}>
+                  {certs.map((c, i) => {
+                    const line = [c?.name, c?.issuer, c?.year].filter(Boolean).join(" — ");
+                    if (!line) return null;
+                    return (
+                      <li key={i} style={{ margin: "2px 0" }}>
+                        {line}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
-            );
-          })}
-          <hr style={s.hr} />
-        </section>
-      )}
+            )}
 
-      {/* Certifications */}
-      {certs.some(c => c && (c.name || c.issuer || c.year)) && (
-        <section style={s.section}>
-          <div style={s.sectionTitle}>CERTIFICATIONS</div>
-          <ul style={{ marginTop: 8, marginLeft: 18 }}>
-            {certs.map((c, i) => {
-              const line = [c?.name, c?.issuer, c?.year].filter(Boolean).join(" — ");
-              if (!line) return null;
-              return (
-                <li key={i} style={s.bullet}>
-                  {line}
-                </li>
-              );
-            })}
-          </ul>
-          <hr style={s.hr} />
-        </section>
-      )}
-
-      {/* Skills */}
-      {skills.length > 0 && (
-        <section style={s.section}>
-          <div style={s.sectionTitle}>SKILLS</div>
-          <div style={s.pillWrap}>
-            {skills.map((sk, i) => (
-              <span key={i} style={s.pill}>
-                {sk}
-              </span>
-            ))}
+            {/* Skills */}
+            {skills.length > 0 && (
+              <div className="resume-section">
+                <div className="resume-section-title">Skills</div>
+                <div className="resume-skills">
+                  {skills.map((sk, i) => (
+                    <span key={i} className="resume-skill">
+                      {sk}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        </section>
-      )}
-
-      {/* Loading */}
-      {!data && !error && <p style={s.faint}>Loading latest résumé…</p>}
-    </main>
+        ) : (
+          <div className="empty-state">
+            <FileText className="empty-state-icon" />
+            <h4 className="empty-state-title">Loading Resume</h4>
+            <p className="empty-state-description">
+              {!data && !error ? "Loading latest résumé…" : "Start adding information to see the preview here"}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
