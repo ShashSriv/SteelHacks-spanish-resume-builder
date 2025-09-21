@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Header from './components/Header';
 import VoiceInput from './components/VoiceInput';
 import HowItWorksSection from './components/HowItWorksSection';
@@ -24,39 +24,39 @@ function App() {
     summary: ''
   });
   
-  const [transcript, setTranscript] = useState('');
-  const [translation, setTranslation] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStep, setCurrentStep] = useState('contact'); // contact, experience, education, skills, summary
   const [sessionActive, setSessionActive] = useState(false);
 
-  // Handle voice input processing
-  const handleVoiceInput = async (transcriptText) => {
-    setTranscript(transcriptText);
+  // Handle voice input processing - receives processed data from VAPI backend
+  const handleVoiceInput = async (processedData) => {
     setIsProcessing(true);
     
     try {
-      const response = await processTextWithVAPI(transcriptText, currentStep, resumeData);
+      console.log('Received processed data from VAPI backend:', processedData);
       
-      if (response.translation) {
-        setTranslation(response.translation);
+      // VAPI backend has already processed the audio and sent structured data
+      if (processedData) {
+        // Update resume data with structured information from VAPI
+        setResumeData(prevData => ({
+          ...prevData,
+          ...processedData
+        }));
       }
       
-      if (response.updatedData) {
-        setResumeData(response.updatedData);
+      // Move to next step if specified
+      if (processedData?.nextStep) {
+        setCurrentStep(processedData.nextStep);
       }
       
-      if (response.nextStep) {
-        setCurrentStep(response.nextStep);
-      }
+      console.log('Resume data updated with VAPI processed data');
     } catch (error) {
-      console.error('Error processing voice input:', error);
+      console.error('Error handling processed data from VAPI:', error);
       alert('Error processing voice input. Please try again.');
     } finally {
       setIsProcessing(false);
     }
   };
-
 
   // Handle PDF download
   const handleDownloadPDF = async () => {
@@ -87,8 +87,6 @@ function App() {
   const startSession = () => {
     setSessionActive(true);
     setCurrentStep('contact');
-    setTranscript('');
-    setTranslation('');
   };
 
   const endSession = () => {
@@ -120,11 +118,11 @@ function App() {
           <div className="input-section">
             <div className="card">
               <div className="card-header">
-                <h2 className="card-title">Information Input</h2>
+                <h2 className="card-title">Voice Input</h2>
                 <p className="card-subtitle">
                   {sessionActive 
-                    ? `Current step: ${getStepTitle(currentStep)} - Speak to add information`
-                    : 'Start a session to begin building your CV with voice'
+                    ? 'Our assistant will guide you through the process - Just speak when asked'
+                    : 'Start a session to begin building your resume with voice'
                   }
                 </p>
               </div>
@@ -135,7 +133,7 @@ function App() {
                     className="btn btn-primary"
                     onClick={startSession}
                   >
-                    Start Session
+                    Start Voice Session
                   </button>
                 </div>
               ) : (
@@ -143,7 +141,6 @@ function App() {
                   <VoiceInput 
                     onVoiceInput={handleVoiceInput}
                     isProcessing={isProcessing}
-                    currentStep={currentStep}
                   />
                   
                   <button 
@@ -156,7 +153,6 @@ function App() {
                 </>
               )}
             </div>
-
           </div>
 
           {/* Preview Section */}
@@ -183,16 +179,5 @@ function App() {
   );
 }
 
-// Helper function to get step titles in English
-const getStepTitle = (step) => {
-  const titles = {
-    contact: 'Contact Information',
-    experience: 'Work Experience',
-    education: 'Education',
-    skills: 'Skills',
-    summary: 'Professional Summary'
-  };
-  return titles[step] || step;
-};
 
 export default App;
