@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import VoiceInput from './components/VoiceInput';
-import TextInput from './components/TextInput';
 import ResumePreview from './components/ResumePreview';
 import ResumeForm from './components/ResumeForm';
+import HowItWorksSection from './components/HowItWorksSection';
+import AboutSection from './components/AboutSection';
+import ApplySection from './components/ApplySection';
 import { processVoiceWithVAPI, processTextWithVAPI, generateHTMLResume, htmlToPDF } from './utils/vapiIntegration';
 import './App.css';
 import ResPrev from './components/ResPrev'
@@ -183,6 +185,11 @@ function App() {
           <ResPrev/>
           </div>
       </main>
+
+      {/* Additional Sections */}
+      <HowItWorksSection />
+      <AboutSection />
+      <ApplySection />
     </div>
   );
 }
