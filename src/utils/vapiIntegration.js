@@ -328,9 +328,9 @@ export const generateHTMLResume = async (resumeData) => {
             <div class="resume-name">${resumeData.contact.name}</div>
             <div class="resume-contact">
                 ${resumeData.contact.email ? `${resumeData.contact.email}` : ''}
-                ${resumeData.contact.phone ? ` • ${resumeData.contact.phone}` : ''}
-                ${resumeData.contact.address ? ` • ${resumeData.contact.address}` : ''}
-                ${resumeData.contact.linkedin ? ` • ${resumeData.contact.linkedin}` : ''}
+                ${resumeData.contact.phone ? ` | ${resumeData.contact.phone}` : ''}
+                ${resumeData.contact.address ? ` | ${resumeData.contact.address}` : ''}
+                ${resumeData.contact.linkedin ? ` | ${resumeData.contact.linkedin}` : ''}
             </div>
         </div>
         ` : ''}
@@ -350,9 +350,16 @@ export const generateHTMLResume = async (resumeData) => {
             ${resumeData.experience.map(exp => `
             <div class="resume-item">
                 <div class="resume-item-title">${exp.title || 'Position'}</div>
-                ${exp.company ? `<div class="resume-item-company">${exp.company}</div>` : ''}
                 <div class="resume-item-dates">${exp.dates || 'Dates'}</div>
-                ${exp.description ? `<div class="resume-item-description">${exp.description}</div>` : ''}
+                ${exp.description ? `
+                <div class="resume-item-description">
+                    <ul style="margin: 6px 0 0 18px; padding: 0;">
+                        ${exp.description.split('\n').filter(line => line.trim()).map(line => 
+                            `<li style="margin: 2px 0;">${line.trim()}</li>`
+                        ).join('')}
+                    </ul>
+                </div>
+                ` : ''}
             </div>
             `).join('')}
         </div>
@@ -364,8 +371,8 @@ export const generateHTMLResume = async (resumeData) => {
             <div class="resume-section-title">Education</div>
             ${resumeData.education.map(edu => `
             <div class="resume-item">
-                <div class="resume-item-title">${edu.degree || 'Degree'}</div>
-                <div class="resume-item-company">${edu.institution || 'Institution'}</div>
+                <div class="resume-item-title">${edu.institution || 'Institution'}</div>
+                <div class="resume-item-company">${edu.degree || 'Degree'}</div>
                 <div class="resume-item-dates">${edu.dates || 'Dates'}</div>
             </div>
             `).join('')}
@@ -382,15 +389,6 @@ export const generateHTMLResume = async (resumeData) => {
         </div>
         ` : ''}
 
-        <!-- Languages -->
-        ${resumeData.languages.length > 0 ? `
-        <div class="resume-section">
-            <div class="resume-section-title">Languages</div>
-            <div class="resume-skills">
-                ${resumeData.languages.map(lang => `<span class="resume-skill">${lang}</span>`).join('')}
-            </div>
-        </div>
-        ` : ''}
     </div>
 </body>
 </html>`;
