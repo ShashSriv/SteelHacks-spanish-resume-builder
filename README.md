@@ -50,15 +50,15 @@ src/ # React frontend
 ---
 
 ## 🖥️ Setup & Run
+**Important**: You would have to use vapi.ai to connect to your backend and frontend if you want the voice input to work, you can test with Postman too!
 ```
-setup_and_run:
   backend:
     steps:
       - cd backend
       - pip install -r requirements.txt
       - python api.py
     expose_with_ngrok:
-      - ngrok http 5000
+      - ngrok http 8000
 
   frontend:
     steps:
