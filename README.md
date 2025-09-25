@@ -1,224 +1,70 @@
-# LinguaCV
+# Spanish Resume Builder
 
-A React.js front-end application that allows Spanish-speaking users to create professional resumes using voice or text input, with automatic translation and LaTeX PDF generation.
-
-## Key Features
-
-### ✅ Implemented Features
-
-1. **Voice Input**
-   - Microphone button to start recording
-   - Real-time audio recording with visual indicator
-   - Ready for VAPI (Voice AI Platform) integration
-
-2. **Text Input**
-   - Text field for manual Spanish input
-   - Quick send support with Ctrl+Enter
-
-3. **Transcript Preview**
-   - Shows original Spanish text
-   - Shows real-time English translation
-   - Processing indicator
-
-4. **Resume Preview**
-   - Real-time resume preview
-   - Progress bar showing current step
-   - Clean professional format
-
-5. **PDF Generation**
-   - LaTeX generation from structured data
-   - Direct PDF download
-   - Professional one-page format
-
-7. **English Interface**
-   - Complete English localization
-   - Professional and academic design
-   - Responsive design for mobile
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── Header.js              # Header with logo and download button
-│   ├── VoiceInput.js          # Voice input component
-│   ├── TextInput.js           # Text input component
-│   ├── TranscriptPreview.js   # Transcript preview
-├── utils/
-│   └── vapiIntegration.js     # VAPI integration utilities
-├── App.js                     # Main component
-├── App.css                    # Main styles
-├── index.js                   # Entry point
-└── index.css                  # Global styles
-```
-
-## Installation and Setup
-
-### Prerequisites
-- Node.js (version 16 or higher)
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd SteelHacks-spanish-resume-builder
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Configure environment variables**
-   ```bash
-   # Create .env file in project root
-   REACT_APP_VAPI_API_KEY=your_vapi_api_key
-   ```
-
-4. **Run the application**
-   ```bash
-   npm start
-   ```
-
-The application will be available at `http://localhost:3000`
-
-## Application Usage
-
-### Workflow
-
-1. **Start Session**: Click "Start Session" to begin
-2. **Contact Information**: Provide your name, email, and phone
-3. **Work Experience**: Describe your professional experience
-4. **Education**: Mention your academic background
-5. **Skills**: List your technical competencies
-6. **Professional Summary**: Write a summary of your profile
-6. **Download PDF**: Generate and download your CV in PDF format
-
-### Input Methods
-
-#### Voice Input
-- Click "Start Recording"
-- Speak clearly in Spanish
-- Click "Stop Recording" when finished
-- The system will process and translate automatically
-
-#### Text Input
-- Type directly in the text field
-- Use Ctrl+Enter to send quickly
-- The system will process and translate automatically
-
-## VAPI Integration
-
-The application is ready to integrate with VAPI (Voice AI Platform) for:
-
-- **Speech-to-Text**: Audio to text conversion
-- **Translation**: Automatic Spanish-English translation
-- **Content Processing**: Structured data extraction
-- **LaTeX Generation**: LaTeX document creation
-
-### VAPI Configuration
-
-1. Get your VAPI API key
-2. Configure the environment variable `REACT_APP_VAPI_API_KEY`
-3. Update functions in `src/utils/vapiIntegration.js` with real VAPI URLs
-
-## Data Structure
-
-The CV is stored in JSON format with the following structure:
-
-```json
-{
-  "contact": {
-    "name": "María González",
-    "email": "maria@example.com",
-    "phone": "555-1234",
-    "address": "Ciudad, País",
-    "linkedin": "linkedin.com/in/maria"
-  },
-  "experience": [
-    {
-      "title": "Desarrolladora de Software",
-      "company": "TechCorp",
-      "dates": "2020 - 2023",
-      "description": "Desarrollé aplicaciones web..."
-    }
-  ],
-  "education": [
-    {
-      "degree": "Licenciatura en Ciencias de la Computación",
-      "institution": "Universidad Nacional",
-      "dates": "2016 - 2020"
-    }
-  ],
-  "skills": ["JavaScript", "React", "Node.js"],
-  "languages": ["Español (Nativo)", "Inglés (Avanzado)"],
-  "summary": "Desarrolladora apasionada con 5 años de experiencia..."
-}
-```
-
-## Technologies Used
-
-- **React.js 18**: Main framework
-- **Lucide React**: Icons
-- **CSS3**: Styles and responsive design
-- **VAPI**: Voice and AI integration (ready)
-- **LaTeX**: PDF generation (ready)
-
-## Technical Features
-
-### Responsive Design
-- Mobile and tablet adaptive design
-- Flexible grid system
-- Components optimized for different screen sizes
-
-### Accessibility
-- Complete English interface
-- Clear visual indicators
-- Intuitive navigation
-
-### Performance
-- React optimized components
-- Asynchronous data loading
-- Processing state indicators
-
-## Next Steps
-
-### Complete VAPI Integration
-1. Implement real VAPI API calls
-2. Configure AI models specific to Spanish
-3. Optimize transcription and translation accuracy
-
-### Functionality Improvements
-1. Customizable resume templates
-2. Multiple export formats
-3. LinkedIn integration
-4. Enhanced data validation
-
-### Optimizations
-1. Local data cache
-2. Offline processing
-3. Performance improvements
-
-## Contributing
-
-This project was developed for SteelHacks. To contribute:
-
-1. Fork the repository
-2. Create a branch for your feature
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
-
-## License
-
-This project is under the MIT license. See the LICENSE file for more details.
-
-## Contact
-
-For questions or support, contact the development team.
+A full-stack web application that generates resumes in **real time using voice input**, built during **SteelHacks 2025 (24-hour hackathon)**. The project integrates a voice AI agent API with a Flask backend and React frontend to create a seamless experience for resume construction.  
 
 ---
 
-**Note**: This is the front-end version of the project. Complete VAPI integration and real PDF generation require additional backend service configuration.
+## 🚀 Features
+- 🎙️ **Voice-powered input** — speak in Spanish to add resume details.  
+- 🔗 **AI API integration** — backend receives live voice transcription data via RESTful `POST` endpoints.  
+- 🛠️ **Object-oriented composition** — backend structures and formats data into reusable resume objects.  
+- ⚡ **Real-time updates** — React frontend polls the backend every 2 seconds for near-live resume rendering.  
+- 📄 **Export-ready format** — resumes are structured for job platforms like Indeed and Glassdoor.  
+
+---
+
+## 🏗️ Tech Stack
+- **Frontend:** React, JavaScript, CSS  
+- **Backend:** Flask (Python), RESTful API design  
+- **Utilities:** ngrok (for exposing local server), object-oriented helper classes  
+- **Other:** Voice AI Agent API, HTML/CSS for layout  
+
+---
+
+## 📂 Project Structure
+
+```
+backend/ # Flask backend
+├── api.py # REST API routes (POST for AI data, GET for frontend polling)
+├── helper_classes.py # Resume object composition logic
+
+public/ # Static assets
+├── images/ # App images (Glassdoor, Indeed logos)
+└── index.html
+
+src/ # React frontend
+├── components/ # UI components (AboutSection, ApplySection, VoiceInput, etc.)
+├── utils/ # Helper utilities
+├── App.js # Main frontend app
+└── index.js # Entry point
+```
+
+---
+
+## ⚙️ How It Works
+1. **Voice Input** → User speaks in Spanish; the AI agent transcribes and sends structured data to the Flask backend via a `POST` request.  
+2. **Backend Processing** → Flask applies OOP composition to organize the raw data into structured resume objects.  
+3. **Frontend Updates** → React polls the Flask API every 2 seconds with `GET` requests to fetch the latest resume data.  
+4. **Live Resume** → Users see their resume update in real time, ready to export or apply to job sites.  
+
+---
+
+## 🖥️ Setup & Run
+```
+setup_and_run:
+  backend:
+    steps:
+      - cd backend
+      - pip install -r requirements.txt
+      - python api.py
+    expose_with_ngrok:
+      - ngrok http 5000
+
+  frontend:
+    steps:
+      - cd src
+      - npm install
+      - npm start
+    url: http://localhost:3000
+
+```
