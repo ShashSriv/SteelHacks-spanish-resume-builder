@@ -1,6 +1,11 @@
 # Spanish Resume Builder
 
+**DevPost Link**: https://devpost.com/software/linguacv
+
+
 A full-stack web application that generates resumes in **real time using voice input**, built during **SteelHacks 2025 (24-hour hackathon)**. The project integrates a voice AI agent API with a Flask backend and React frontend to create a seamless experience for resume construction.  
+
+
 
 ---
 
